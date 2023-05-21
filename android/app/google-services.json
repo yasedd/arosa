@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "436314290163",
+    "project_id": "arosa-26dc8",
+    "storage_bucket": "arosa-26dc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436314290163:android:9d38a80e45ffd948a34486",
+        "android_client_info": {
+          "package_name": "ma.Eddouche.arosa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "436314290163-vfv3sat4ee64rhv6f2bfhi0uk780cfqv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ma.Eddouche.arosa",
+            "certificate_hash": "c0bde20aa8cbc36658323e8090efa73d1aba27be"
+          }
+        },
+        {
+          "client_id": "436314290163-ko688lfecja23hrthp8l0361et6b9jrf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGsGMU8n2ImJ8nSmoqtBwie4xEnt8A4sw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "436314290163-ko688lfecja23hrthp8l0361et6b9jrf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
