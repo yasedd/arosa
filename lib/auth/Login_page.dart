@@ -127,7 +127,7 @@ class _Login_pageState extends State<Login_page> {
                       UserCredential responce = await login();
                       // ignore: unnecessary_null_comparison
                       if (responce != null) {
-                        Navigator.of(context).pushReplacementNamed('home page');
+                        Navigator.of(context).pushReplacementNamed('Home');
                       } else {
                         print("Login faild ");
                       }
