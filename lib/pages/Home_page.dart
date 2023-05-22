@@ -1,6 +1,7 @@
 // import 'package:arosa/main.dart';
 
 import 'package:arosa/scaffold_adds/drawer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home_page extends StatefulWidget {
@@ -49,7 +50,8 @@ class _Home_pageState extends State<Home_page> {
         centerTitle: true,
         actions: [
           IconButton(
-              onPressed: () {
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
                 Navigator.of(context).pushReplacementNamed('Login');
               },
               icon: const Icon(Icons.logout))

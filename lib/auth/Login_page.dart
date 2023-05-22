@@ -1,4 +1,5 @@
-// import 'package:arosa/main.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Login_page extends StatefulWidget {
@@ -9,12 +10,36 @@ class Login_page extends StatefulWidget {
 }
 
 class _Login_pageState extends State<Login_page> {
-  var username;
+  var email;
   var password;
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  login() {
+  login() async {
+    print('$email $password');
     if (formkey.currentState!.validate()) {
-      Navigator.of(context).pushReplacementNamed('Home');
+      formkey.currentState!.save();
+      try {
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password);
+        return credential;
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.error,
+                  title: 'Error',
+                  desc: 'No user found for that email.')
+              .show();
+          print('No user found for that email.');
+        } else if (e.code == 'wrong-password') {
+          AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.error,
+                  title: 'Error',
+                  desc: 'Wrong password provided for that user.')
+              .show();
+          print('Wrong password provided for that user.');
+        }
+      }
     }
   }
 
@@ -55,10 +80,10 @@ class _Login_pageState extends State<Login_page> {
                     TextFormField(
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Username',
+                        labelText: 'email',
                         prefixIcon: Icon(Icons.person),
                       ),
-                      onSaved: (newValue) => username = newValue,
+                      onSaved: (newValue) => email = newValue,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please entre your user name';
@@ -98,8 +123,17 @@ class _Login_pageState extends State<Login_page> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton.icon(
-                    onPressed: () {
-                      login();
+                    onPressed: () async {
+                      UserCredential responce = await login();
+                      // ignore: unnecessary_null_comparison
+                      if (responce != null) {
+                        Navigator.of(context).pushReplacementNamed('home page');
+                      } else {
+                        print("Login faild ");
+                      }
+                      print('***************');
+                      print(responce);
+                      print('***************');
                     },
                     icon: const Icon(Icons.login),
                     label: const Text('Login')),

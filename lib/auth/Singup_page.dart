@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class Signup_page extends StatefulWidget {
   const Signup_page({super.key});
@@ -15,9 +16,37 @@ class _Signup_pageState extends State<Signup_page> {
   var phonenumber;
   var password;
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  signup() {
+  signup() async {
+    print("$email  $password");
     if (formkey.currentState!.validate()) {
-      Navigator.of(context).pushReplacementNamed('Home');
+      formkey.currentState!.save();
+      try {
+        // ignore: unused_local_variable
+        final credential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        return credential;
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          AwesomeDialog(
+              context: context,
+              title: 'Error',
+              body: const Text('The password provided is too weak.'))
+            ..show();
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          AwesomeDialog(
+              context: context,
+              title: 'Error',
+              body: const Text('The account already exists for that email.'))
+            ..show();
+          print('The account already exists for that email.');
+        }
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
@@ -67,20 +96,21 @@ class _Signup_pageState extends State<Signup_page> {
                           height: 20,
                         ),
                         TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: const InputDecoration(
-                              labelText: 'Email',
+                              labelText: 'email',
                               border: OutlineInputBorder(),
                               prefixIcon: Icon(Icons.email)),
-                          keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           onSaved: (newValue) {
                             email = newValue;
+                            // print(newValue);
                           },
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Fild is empty';
-                            } else {
+                            if (value!.contains('@') & value.contains('.')) {
                               return null;
+                            } else {
+                              return 'Not a email adress';
                             }
                           },
                         ),
@@ -93,15 +123,16 @@ class _Signup_pageState extends State<Signup_page> {
                               labelText: 'Password',
                               border: OutlineInputBorder(),
                               prefixIcon: Icon(Icons.password)),
-                          obscureText: true,
+                          // obscureText: true,
                           textInputAction: TextInputAction.next,
                           onSaved: (newValue) {
                             password = newValue;
+                            // print(newValue);
                           },
                           validator: (value) {
                             passconf = value;
                             if (value!.length < 6) {
-                              return "Weak password";
+                              return 'Weak password';
                             } else {
                               return null;
                             }
@@ -116,7 +147,7 @@ class _Signup_pageState extends State<Signup_page> {
                               labelText: 'Confirmation Password',
                               border: OutlineInputBorder(),
                               prefixIcon: Icon(Icons.done)),
-                          obscureText: true,
+                          // obscureText: true,
                           textInputAction: TextInputAction.done,
                           validator: (value) {
                             if (value != passconf) {
@@ -135,8 +166,21 @@ class _Signup_pageState extends State<Signup_page> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton.icon(
-                        onPressed: () {
-                          signup();
+                        onPressed: () async {
+                          var response = await signup();
+                          // ignore: unnecessary_null_comparison
+                          if (response != null) {
+                            Navigator.of(context).pushNamed('Home');
+                          } else {
+                            // ignore: use_build_context_synchronously
+                            AwesomeDialog(
+                                    context: context,
+                                    title: 'Error',
+                                    desc: 'Sign Up Faild')
+                                .show();
+                          }
+
+                          print(response.user);
                         },
                         icon: const Icon(Icons.app_registration_sharp),
                         label: const Text('Sing Up')),

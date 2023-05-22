@@ -41,6 +41,7 @@ dependencies:
   firebase_auth: ^4.6.1
   cloud_firestore: ^4.7.1
   firebase_storage: ^11.2.1
+  awesome_dialog: ^3.0.2
 
 flutter_native_splash:
   color: "#42a5f5"

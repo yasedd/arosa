@@ -1,4 +1,5 @@
 import 'package:arosa/pages/About.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'pages/State_tools.dart';
 import 'auth/Singup_page.dart';
@@ -7,7 +8,9 @@ import 'auth/Login_page.dart';
 import 'pages/Home_page.dart';
 import 'pages/User_info.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
