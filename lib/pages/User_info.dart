@@ -122,7 +122,7 @@ class _User_infoState extends State<User_info> {
                                     decoration: const InputDecoration(
                                       border: OutlineInputBorder(),
                                       labelText: 'New Phone number',
-                                      prefixIcon: Icon(Icons.person),
+                                      prefixIcon: Icon(Icons.phone),
                                     ),
                                     textInputAction: TextInputAction.done,
                                     onSaved: (newValue) {
@@ -166,7 +166,7 @@ class _User_infoState extends State<User_info> {
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     hintText: '${data['password']}',
-                                    prefixIcon: Icon(Icons.person),
+                                    prefixIcon: Icon(Icons.password),
                                   ),
                                   readOnly: true,
                                   textInputAction: TextInputAction.done,

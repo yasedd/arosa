@@ -108,7 +108,9 @@ class _Login_pageState extends State<Login_page> {
                         prefixIcon: Icon(Icons.password),
                         suffixIcon: IconButton(
                             onPressed: () {
-                              value = false;
+                              setState(() {
+                                value = false;
+                              });
                             },
                             icon: const Icon(Icons.remove_red_eye)),
                       ),
