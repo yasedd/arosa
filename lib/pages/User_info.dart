@@ -1,5 +1,6 @@
 import 'package:arosa/scaffold_adds/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User_info extends StatefulWidget {
   const User_info({super.key});
@@ -9,6 +10,9 @@ class User_info extends StatefulWidget {
 }
 
 class _User_infoState extends State<User_info> {
+  var ref = FirebaseFirestore.instance
+      .collection('users')
+      .doc('gml9GRvOKYzmgMzO1lQn');
   GlobalKey<FormState> namechange = GlobalKey<FormState>();
   GlobalKey<FormState> emailchange = GlobalKey<FormState>();
   String username = 'Yasser Eddouche';
@@ -31,113 +35,154 @@ class _User_infoState extends State<User_info> {
         ],
       ),
       drawer: const drawer(),
-      body: ListView(
-        children: [
-          UserAccountsDrawerHeader(
-            accountName: Text(username),
-            accountEmail: Text(email),
-            currentAccountPicture: const CircleAvatar(
-                backgroundImage: AssetImage('images/User_default.png')),
-          ),
-          ListTile(
-            title: const Text('Username'),
-            subtitle: Text(username),
-            leading: const Icon(Icons.person),
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                        title: const Text('Change Username'),
-                        content: Form(
-                          key: namechange,
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'New Username',
-                              prefixIcon: Icon(Icons.person),
-                            ),
-                            textInputAction: TextInputAction.done,
-                            onSaved: (newValue) {
-                              un = newValue;
-                              username = un;
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please entre your user name';
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                        ),
-                        actions: [
-                          ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  if (namechange.currentState!.validate()) {
-                                    namechange.currentState!.save();
-                                    Navigator.of(context).pop();
-                                  }
-                                });
-                              },
-                              child: const Text('Change'))
-                        ],
-                      ));
-            },
-          ),
-          ListTile(
-            title: const Text('email'),
-            subtitle: Text(email),
-            leading: const Icon(Icons.email),
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                        title: const Text('Change Email'),
-                        content: Form(
-                          key: emailchange,
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                                labelText: 'New Email',
-                                border: OutlineInputBorder(),
-                                prefixIcon: Icon(Icons.email)),
-                            keyboardType: TextInputType.emailAddress,
-                            textInputAction: TextInputAction.done,
-                            onSaved: (newValue) {
-                              em = newValue;
-                              email = em;
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Fild is empty';
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                        ),
-                        actions: [
-                          ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  if (emailchange.currentState!.validate()) {
-                                    emailchange.currentState!.save();
-                                    Navigator.of(context).pop();
-                                  }
-                                });
-                              },
-                              child: const Text('Change'))
-                        ],
-                      ));
-            },
-          ),
-          ListTile(
-            title: const Text('Change password'),
-            leading: const Icon(Icons.password),
-            onTap: () {},
-          ),
-        ],
-      ),
+      body: FutureBuilder(
+          future: ref.get(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasError) {
+              return Text("Something went wrong");
+            }
+
+            if (snapshot.hasData && !snapshot.data!.exists) {
+              return Text("Document does not exist");
+            }
+            if (snapshot.connectionState == ConnectionState.done) {
+              Map<String, dynamic> data =
+                  snapshot.data!.data() as Map<String, dynamic>;
+              return ListView(
+                children: [
+                  UserAccountsDrawerHeader(
+                    accountName: Text(data['username']),
+                    accountEmail: Text(data['email']),
+                    currentAccountPicture: const CircleAvatar(
+                        backgroundImage: AssetImage('images/User_default.png')),
+                  ),
+                  ListTile(
+                    title: const Text('Username'),
+                    subtitle: Text(data['username']),
+                    leading: const Icon(Icons.person),
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                title: const Text('Change Username'),
+                                content: Form(
+                                  key: namechange,
+                                  child: TextFormField(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'New Username',
+                                      prefixIcon: Icon(Icons.person),
+                                    ),
+                                    textInputAction: TextInputAction.done,
+                                    onSaved: (newValue) {
+                                      ref.update({'username': newValue});
+                                    },
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please entre your username';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                ),
+                                actions: [
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          if (namechange.currentState!
+                                              .validate()) {
+                                            namechange.currentState!.save();
+                                            Navigator.of(context).pop();
+                                          }
+                                        });
+                                      },
+                                      child: const Text('Change'))
+                                ],
+                              ));
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('email'),
+                    subtitle: Text(data['email']),
+                    leading: const Icon(Icons.email),
+                  ),
+                  ListTile(
+                    title: const Text('Phone'),
+                    subtitle: Text(data['phone']),
+                    leading: const Icon(Icons.phone),
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                title: const Text('Change Phone number'),
+                                content: Form(
+                                  key: namechange,
+                                  child: TextFormField(
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'New Phone number',
+                                      prefixIcon: Icon(Icons.person),
+                                    ),
+                                    textInputAction: TextInputAction.done,
+                                    onSaved: (newValue) {
+                                      ref.update({'phone': newValue});
+                                    },
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please entre your phone';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                ),
+                                actions: [
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          if (namechange.currentState!
+                                              .validate()) {
+                                            namechange.currentState!.save();
+                                            Navigator.of(context).pop();
+                                          }
+                                        });
+                                      },
+                                      child: const Text('Change'))
+                                ],
+                              ));
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('password'),
+                    leading: const Icon(Icons.password),
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                                title: const Text('Password'),
+                                content: TextFormField(
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+
+                                    // labelText: 'New Username',
+                                    prefixIcon: Icon(Icons.person),
+                                  ),
+                                  initialValue: '${data['password']}',
+                                  readOnly: true,
+                                  textInputAction: TextInputAction.done,
+                                ));
+                          });
+                    },
+                  ),
+                ],
+              );
+            } else
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+          }),
     );
   }
 }

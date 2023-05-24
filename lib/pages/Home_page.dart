@@ -1,5 +1,3 @@
-// import 'package:arosa/main.dart';
-
 import 'package:arosa/scaffold_adds/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +11,7 @@ class Home_page extends StatefulWidget {
 }
 
 class _Home_pageState extends State<Home_page> {
-  List user = [];
-  DocumentReference docref = FirebaseFirestore.instance
+  DocumentReference ref = FirebaseFirestore.instance
       .collection('users')
       .doc('gml9GRvOKYzmgMzO1lQn');
 
@@ -35,7 +32,7 @@ class _Home_pageState extends State<Home_page> {
       ),
       drawer: const drawer(),
       body: FutureBuilder<DocumentSnapshot>(
-        future: docref.get(),
+        future: ref.get(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasError) {
             return Text("Something went wrong");
@@ -131,11 +128,10 @@ class _Home_pageState extends State<Home_page> {
                 },
               ),
             ]);
-          }
-
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          } else
+            return Center(
+              child: CircularProgressIndicator(),
+            );
         },
       ),
     );

@@ -78,20 +78,23 @@ class _Login_pageState extends State<Login_page> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'email',
-                        prefixIcon: Icon(Icons.person),
-                      ),
-                      onSaved: (newValue) => email = newValue,
+                          labelText: 'email',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.email)),
+                      textInputAction: TextInputAction.next,
+                      onSaved: (newValue) {
+                        email = newValue;
+                        // print(newValue);
+                      },
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please entre your user name';
-                        } else {
+                        if (value!.contains('@') & value.contains('.')) {
                           return null;
+                        } else {
+                          return 'Not a email adress';
                         }
                       },
-                      textInputAction: TextInputAction.next,
                     ),
                     const SizedBox(
                       height: 20,
