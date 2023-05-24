@@ -45,6 +45,7 @@ class _Login_pageState extends State<Login_page> {
 
   @override
   Widget build(BuildContext context) {
+    bool value = true;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Login Page"),
@@ -101,12 +102,17 @@ class _Login_pageState extends State<Login_page> {
                     ),
                     TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Password',
                         prefixIcon: Icon(Icons.password),
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              value = false;
+                            },
+                            icon: const Icon(Icons.remove_red_eye)),
                       ),
-                      obscureText: true,
+                      obscureText: value,
                       textInputAction: TextInputAction.done,
                       onSaved: (newValue) => password = newValue,
                       validator: (value) {

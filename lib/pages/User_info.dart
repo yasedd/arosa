@@ -163,13 +163,11 @@ class _User_infoState extends State<User_info> {
                             return AlertDialog(
                                 title: const Text('Password'),
                                 content: TextFormField(
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     border: OutlineInputBorder(),
-
-                                    // labelText: 'New Username',
+                                    hintText: '${data['password']}',
                                     prefixIcon: Icon(Icons.person),
                                   ),
-                                  initialValue: '${data['password']}',
                                   readOnly: true,
                                   textInputAction: TextInputAction.done,
                                 ));
