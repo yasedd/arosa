@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../scaffold_adds/alert.dart';
+
 class Home_page extends StatefulWidget {
   const Home_page({super.key});
 
@@ -11,9 +13,10 @@ class Home_page extends StatefulWidget {
 }
 
 class _Home_pageState extends State<Home_page> {
-  DocumentReference ref = FirebaseFirestore.instance
+  var userid = FirebaseAuth.instance.currentUser?.uid;
+  var ref = FirebaseFirestore.instance
       .collection('users')
-      .doc('gml9GRvOKYzmgMzO1lQn');
+      .doc(FirebaseAuth.instance.currentUser!.uid);
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +27,7 @@ class _Home_pageState extends State<Home_page> {
         actions: [
           IconButton(
               onPressed: () async {
+                showloading(context);
                 await FirebaseAuth.instance.signOut();
                 Navigator.of(context).pushReplacementNamed('Login');
               },
@@ -31,15 +35,15 @@ class _Home_pageState extends State<Home_page> {
         ],
       ),
       drawer: const drawer(),
-      body: FutureBuilder<DocumentSnapshot>(
+      body: FutureBuilder(
         future: ref.get(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasError) {
-            return Text("Something went wrong");
+            return const Text("Something went wrong");
           }
 
           if (snapshot.hasData && !snapshot.data!.exists) {
-            return Text("Document does not exist");
+            return const Text("Document does not exist");
           }
 
           //Data is output to the user
@@ -59,6 +63,7 @@ class _Home_pageState extends State<Home_page> {
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: const [
                         BoxShadow(
+                          color: Colors.grey,
                           blurRadius: 10,
                         )
                       ]),
@@ -77,7 +82,7 @@ class _Home_pageState extends State<Home_page> {
                         height: 150,
                       ),
                       Text(
-                        '${data["Pompes"].length}',
+                        '${data["Pompes"] == null ? 0 : data["Pompes"].length}',
                         // 'pss',
                         style: const TextStyle(
                             fontSize: 40, fontWeight: FontWeight.bold),
@@ -98,6 +103,7 @@ class _Home_pageState extends State<Home_page> {
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: const [
                         BoxShadow(
+                          color: Colors.grey,
                           blurRadius: 10,
                         )
                       ]),
@@ -116,7 +122,7 @@ class _Home_pageState extends State<Home_page> {
                         height: 150,
                       ),
                       Text(
-                        '${data['Vannes'].length}',
+                        '${data['Vannes'] == null ? 0 : data['Vannes'].length}',
                         style: const TextStyle(
                             fontSize: 40, fontWeight: FontWeight.bold),
                       ),

@@ -1,7 +1,9 @@
 import 'package:arosa/pages/About.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 
-import 'pages/State_tools.dart';
+import 'Tools_pages/Add_tools.dart';
+import 'Tools_pages/State_tools.dart';
 import 'auth/Singup_page.dart';
 import 'package:flutter/material.dart';
 import 'auth/Login_page.dart';
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: State_tools(),
+      home: const Login_page(),
       theme: ThemeData(
           primaryColor: Colors.blueAccent,
           listTileTheme: const ListTileThemeData(
@@ -38,7 +40,8 @@ class MyApp extends StatelessWidget {
         'SignUp': (context) => const Signup_page(),
         'User_info': (context) => const User_info(),
         'About': (context) => const About(),
-        'State_tools': (context) => const State_tools()
+        'State_tools': (context) => const State_tools(),
+        'Add_tools': (context) => const Add_tools()
       },
     );
   }

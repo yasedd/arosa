@@ -1,4 +1,5 @@
 import 'package:arosa/scaffold_adds/drawer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -12,12 +13,10 @@ class User_info extends StatefulWidget {
 class _User_infoState extends State<User_info> {
   var ref = FirebaseFirestore.instance
       .collection('users')
-      .doc('gml9GRvOKYzmgMzO1lQn');
+      .doc(FirebaseAuth.instance.currentUser!.uid);
   GlobalKey<FormState> namechange = GlobalKey<FormState>();
   GlobalKey<FormState> emailchange = GlobalKey<FormState>();
-  String username = 'Yasser Eddouche';
-  String email = 'eddoucheyasser@gmail.com';
-  String password = 'password';
+
   var un;
   var em;
   @override
@@ -151,27 +150,6 @@ class _User_infoState extends State<User_info> {
                                       child: const Text('Change'))
                                 ],
                               ));
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('password'),
-                    leading: const Icon(Icons.password),
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                                title: const Text('Password'),
-                                content: TextFormField(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: '${data['password']}',
-                                    prefixIcon: Icon(Icons.password),
-                                  ),
-                                  readOnly: true,
-                                  textInputAction: TextInputAction.done,
-                                ));
-                          });
                     },
                   ),
                 ],

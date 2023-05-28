@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../scaffold_adds/alert.dart';
 
 class Signup_page extends StatefulWidget {
   const Signup_page({super.key});
@@ -15,13 +17,28 @@ class _Signup_pageState extends State<Signup_page> {
   var email;
   var phonenumber;
   var password;
+  List Pompes = [];
+  List Vannes = [];
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  register() async {
+    var ref = FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid);
+    ref.set({
+      'username': username,
+      'email': email,
+      'phone': phonenumber,
+      'userid': FirebaseAuth.instance.currentUser!.uid,
+      'Pompes': Pompes,
+      'Vannes': Vannes
+    });
+  }
+
   signup() async {
     print("$email  $password");
     if (formkey.currentState!.validate()) {
       formkey.currentState!.save();
       try {
-        // ignore: unused_local_variable
         final credential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email,
@@ -31,17 +48,18 @@ class _Signup_pageState extends State<Signup_page> {
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           AwesomeDialog(
-              context: context,
-              title: 'Error',
-              body: const Text('The password provided is too weak.'))
-            ..show();
+                  context: context,
+                  title: 'Error',
+                  body: const Text('The password provided is too weak.'))
+              .show();
           print('The password provided is too weak.');
         } else if (e.code == 'email-already-in-use') {
           AwesomeDialog(
-              context: context,
-              title: 'Error',
-              body: const Text('The account already exists for that email.'))
-            ..show();
+                  context: context,
+                  title: 'Error',
+                  body:
+                      const Text('The account already exists for that email.'))
+              .show();
           print('The account already exists for that email.');
         }
       } catch (e) {
@@ -55,6 +73,7 @@ class _Signup_pageState extends State<Signup_page> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sign up'),
+          centerTitle: true,
         ),
         body: Container(
           padding: const EdgeInsets.all(20),
@@ -64,9 +83,31 @@ class _Signup_pageState extends State<Signup_page> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
-                  'Sign Up',
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                Container(
+                  width: 300,
+                  height: 70,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                          image: AssetImage('images/cover.jpg'),
+                          fit: BoxFit.cover),
+                      boxShadow: [
+                        BoxShadow(color: Colors.blueAccent, blurRadius: 5)
+                      ]),
+                  child: const Center(
+                    child: Text(
+                      'Sign Up',
+                      style: TextStyle(
+                          letterSpacing: 15,
+                          wordSpacing: 5,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(color: Colors.black, blurRadius: 15)
+                          ]),
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 50,
@@ -104,7 +145,6 @@ class _Signup_pageState extends State<Signup_page> {
                           textInputAction: TextInputAction.next,
                           onSaved: (newValue) {
                             email = newValue;
-                            // print(newValue);
                           },
                           validator: (value) {
                             if (value!.contains('@') & value.contains('.')) {
@@ -120,14 +160,34 @@ class _Signup_pageState extends State<Signup_page> {
                         TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: const InputDecoration(
+                              labelText: 'Phone',
+                              border: OutlineInputBorder(),
+                              prefixIcon: Icon(Icons.phone)),
+                          textInputAction: TextInputAction.next,
+                          onSaved: (newValue) {
+                            phonenumber = newValue;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'please enter your phone number';
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: const InputDecoration(
                               labelText: 'Password',
                               border: OutlineInputBorder(),
                               prefixIcon: Icon(Icons.password)),
-                          // obscureText: true,
+                          obscureText: true,
                           textInputAction: TextInputAction.next,
                           onSaved: (newValue) {
                             password = newValue;
-                            // print(newValue);
                           },
                           validator: (value) {
                             passconf = value;
@@ -147,7 +207,7 @@ class _Signup_pageState extends State<Signup_page> {
                               labelText: 'Confirmation Password',
                               border: OutlineInputBorder(),
                               prefixIcon: Icon(Icons.done)),
-                          // obscureText: true,
+                          obscureText: true,
                           textInputAction: TextInputAction.done,
                           validator: (value) {
                             if (value != passconf) {
@@ -170,6 +230,8 @@ class _Signup_pageState extends State<Signup_page> {
                           var response = await signup();
                           // ignore: unnecessary_null_comparison
                           if (response != null) {
+                            register();
+                            showloading(context);
                             Navigator.of(context).pushNamed('Home');
                           } else {
                             // ignore: use_build_context_synchronously
@@ -191,7 +253,6 @@ class _Signup_pageState extends State<Signup_page> {
                         },
                         icon: const Icon(Icons.person),
                         label: const Text('Login')),
-                    // IconButton(onPressed: () {}, icon: const Icon(Icons.clear))
                   ],
                 )
               ],

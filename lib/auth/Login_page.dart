@@ -2,6 +2,8 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../scaffold_adds/alert.dart';
+
 class Login_page extends StatefulWidget {
   const Login_page({super.key});
 
@@ -65,10 +67,17 @@ class _Login_pageState extends State<Login_page> {
             const SizedBox(
               height: 40,
             ),
-            Image.asset(
-              'images/desing_app-removebg.png',
-              width: 200,
-              height: 200,
+            Container(
+              width: 220,
+              height: 220,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(110),
+                  image: DecorationImage(
+                      image: AssetImage('images/desing_app.jpg'),
+                      fit: BoxFit.cover),
+                  boxShadow: [
+                    BoxShadow(color: Colors.blueAccent, blurRadius: 10)
+                  ]),
             ),
             const SizedBox(
               height: 40,
@@ -87,7 +96,6 @@ class _Login_pageState extends State<Login_page> {
                       textInputAction: TextInputAction.next,
                       onSaved: (newValue) {
                         email = newValue;
-                        // print(newValue);
                       },
                       validator: (value) {
                         if (value!.contains('@') & value.contains('.')) {
@@ -138,6 +146,7 @@ class _Login_pageState extends State<Login_page> {
                       UserCredential responce = await login();
                       // ignore: unnecessary_null_comparison
                       if (responce != null) {
+                        showloading(context);
                         Navigator.of(context).pushReplacementNamed('Home');
                       } else {
                         print("Login faild ");

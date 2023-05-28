@@ -440,6 +440,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.1"
+  select_form_field:
+    dependency: "direct main"
+    description:
+      name: select_form_field
+      sha256: "11b2ab3842b9da2a49a7933239c3d428e0cd2d0aa6a70b7e70f370dbf263a751"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -493,6 +501,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
+  time_picker_spinner_pop_up:
+    dependency: "direct main"
+    description:
+      name: time_picker_spinner_pop_up
+      sha256: cc7b7442b6318cef400c329430955d9203893cf4c55c6e28192240ca5bb8d8a6
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   typed_data:
     dependency: transitive
     description:

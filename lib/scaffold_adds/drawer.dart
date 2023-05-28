@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,7 +14,7 @@ class _drawerState extends State<drawer> {
   Widget build(BuildContext context) {
     var ref = FirebaseFirestore.instance
         .collection('users')
-        .doc('gml9GRvOKYzmgMzO1lQn');
+        .doc(FirebaseAuth.instance.currentUser!.uid);
     return Drawer(
       child: FutureBuilder(
         future: ref.get(),
@@ -33,7 +34,7 @@ class _drawerState extends State<drawer> {
                 UserAccountsDrawerHeader(
                   accountName: Text('${data['username']}'),
                   accountEmail: Text('${data['email']}'),
-                  currentAccountPicture: CircleAvatar(
+                  currentAccountPicture: const CircleAvatar(
                     backgroundImage: AssetImage('images/User_default.png'),
                   ),
                 ),
@@ -67,10 +68,9 @@ class _drawerState extends State<drawer> {
                 ListTile(
                   leading: const Icon(Icons.logout),
                   title: const Text('Logout'),
-                  onTap: () {
-                    setState(() {
-                      Navigator.of(context).pushReplacementNamed('Login');
-                    });
+                  onTap: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.of(context).pushReplacementNamed('Login');
                   },
                 ),
               ],

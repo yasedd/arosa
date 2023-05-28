@@ -43,6 +43,8 @@ dependencies:
   firebase_storage: ^11.2.1
   awesome_dialog: ^3.0.2
   intl: ^0.18.1
+  select_form_field: ^2.2.0
+  time_picker_spinner_pop_up: ^1.2.0
 
 flutter_native_splash:
   color: "#42a5f5"
