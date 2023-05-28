@@ -49,17 +49,17 @@ class _Login_pageState extends State<Login_page> {
   Widget build(BuildContext context) {
     bool value = true;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login Page"),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('About');
-              },
-              icon: const Icon(Icons.help))
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: const Text("Login Page"),
+      //   centerTitle: true,
+      //   actions: [
+      //     IconButton(
+      //         onPressed: () {
+      //           Navigator.of(context).pushNamed('About');
+      //         },
+      //         icon: const Icon(Icons.help))
+      //   ],
+      // ),
       body: Container(
         padding: const EdgeInsets.all(20),
         child: ListView(children: [

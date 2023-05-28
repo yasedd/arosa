@@ -71,193 +71,190 @@ class _Signup_pageState extends State<Signup_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Sign up'),
-          centerTitle: true,
-        ),
+        // appBar: AppBar(
+        //   title: const Text('Sign up'),
+        //   centerTitle: true,
+        // ),
         body: Container(
-          padding: const EdgeInsets.all(20),
-          child: ListView(children: [
-            Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  width: 300,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                          image: AssetImage('images/cover.jpg'),
-                          fit: BoxFit.cover),
-                      boxShadow: [
-                        BoxShadow(color: Colors.blueAccent, blurRadius: 5)
-                      ]),
-                  child: const Center(
-                    child: Text(
-                      'Sign Up',
-                      style: TextStyle(
-                          letterSpacing: 15,
-                          wordSpacing: 5,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(color: Colors.black, blurRadius: 15)
-                          ]),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                Form(
-                    key: formkey,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          decoration: const InputDecoration(
-                              labelText: 'Username',
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(Icons.person)),
-                          textInputAction: TextInputAction.next,
-                          onSaved: (newValue) {
-                            username = newValue;
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Fild is empty';
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: const InputDecoration(
-                              labelText: 'email',
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(Icons.email)),
-                          textInputAction: TextInputAction.next,
-                          onSaved: (newValue) {
-                            email = newValue;
-                          },
-                          validator: (value) {
-                            if (value!.contains('@') & value.contains('.')) {
-                              return null;
-                            } else {
-                              return 'Not a email adress';
-                            }
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: const InputDecoration(
-                              labelText: 'Phone',
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(Icons.phone)),
-                          textInputAction: TextInputAction.next,
-                          onSaved: (newValue) {
-                            phonenumber = newValue;
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'please enter your phone number';
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: const InputDecoration(
-                              labelText: 'Password',
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(Icons.password)),
-                          obscureText: true,
-                          textInputAction: TextInputAction.next,
-                          onSaved: (newValue) {
-                            password = newValue;
-                          },
-                          validator: (value) {
-                            passconf = value;
-                            if (value!.length < 6) {
-                              return 'Weak password';
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: const InputDecoration(
-                              labelText: 'Confirmation Password',
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(Icons.done)),
-                          obscureText: true,
-                          textInputAction: TextInputAction.done,
-                          validator: (value) {
-                            if (value != passconf) {
-                              return "Not the Same";
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                      ],
-                    )),
-                const SizedBox(
-                  height: 40,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton.icon(
-                        onPressed: () async {
-                          var response = await signup();
-                          // ignore: unnecessary_null_comparison
-                          if (response != null) {
-                            register();
-                            showloading(context);
-                            Navigator.of(context).pushNamed('Home');
-                          } else {
-                            // ignore: use_build_context_synchronously
-                            AwesomeDialog(
-                                    context: context,
-                                    title: 'Error',
-                                    desc: 'Sign Up Faild')
-                                .show();
-                          }
-
-                          print(response.user);
-                        },
-                        icon: const Icon(Icons.app_registration_sharp),
-                        label: const Text('Sing Up')),
-                    const Text('Login here '),
-                    TextButton.icon(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        icon: const Icon(Icons.person),
-                        label: const Text('Login')),
-                  ],
-                )
-              ],
+      padding: const EdgeInsets.all(20),
+      child: ListView(children: [
+        Column(
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-          ]),
-        ));
+            Container(
+              width: 300,
+              height: 70,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: AssetImage('images/cover.jpg'), fit: BoxFit.cover),
+                  boxShadow: [
+                    BoxShadow(color: Colors.blueAccent, blurRadius: 5)
+                  ]),
+              child: const Center(
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(
+                      letterSpacing: 15,
+                      wordSpacing: 5,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      shadows: [Shadow(color: Colors.black, blurRadius: 15)]),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Form(
+                key: formkey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          labelText: 'Username',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.person)),
+                      textInputAction: TextInputAction.next,
+                      onSaved: (newValue) {
+                        username = newValue;
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Fild is empty';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      decoration: const InputDecoration(
+                          labelText: 'email',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.email)),
+                      textInputAction: TextInputAction.next,
+                      onSaved: (newValue) {
+                        email = newValue;
+                      },
+                      validator: (value) {
+                        if (value!.contains('@') & value.contains('.')) {
+                          return null;
+                        } else {
+                          return 'Not a email adress';
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      decoration: const InputDecoration(
+                          labelText: 'Phone',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.phone)),
+                      textInputAction: TextInputAction.next,
+                      onSaved: (newValue) {
+                        phonenumber = newValue;
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'please enter your phone number';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      decoration: const InputDecoration(
+                          labelText: 'Password',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.password)),
+                      obscureText: true,
+                      textInputAction: TextInputAction.next,
+                      onSaved: (newValue) {
+                        password = newValue;
+                      },
+                      validator: (value) {
+                        passconf = value;
+                        if (value!.length < 6) {
+                          return 'Weak password';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      decoration: const InputDecoration(
+                          labelText: 'Confirmation Password',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.done)),
+                      obscureText: true,
+                      textInputAction: TextInputAction.done,
+                      validator: (value) {
+                        if (value != passconf) {
+                          return "Not the Same";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                  ],
+                )),
+            const SizedBox(
+              height: 40,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                    onPressed: () async {
+                      var response = await signup();
+                      // ignore: unnecessary_null_comparison
+                      if (response != null) {
+                        register();
+                        showloading(context);
+                        Navigator.of(context).pushNamed('Home');
+                      } else {
+                        // ignore: use_build_context_synchronously
+                        AwesomeDialog(
+                                context: context,
+                                title: 'Error',
+                                desc: 'Sign Up Faild')
+                            .show();
+                      }
+
+                      print(response.user);
+                    },
+                    icon: const Icon(Icons.app_registration_sharp),
+                    label: const Text('Sing Up')),
+                const Text('Login here '),
+                TextButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Icons.person),
+                    label: const Text('Login')),
+              ],
+            )
+          ],
+        ),
+      ]),
+    ));
   }
 }
