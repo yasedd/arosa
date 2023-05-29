@@ -237,7 +237,7 @@ class _Signup_pageState extends State<Signup_page> {
                         if (response != null) {
                           register();
                           showloading(context);
-                          Navigator.of(context).pushNamed('Home');
+                          Navigator.of(context).pushReplacementNamed('Home');
                         } else {
                           // ignore: use_build_context_synchronously
                           AwesomeDialog(

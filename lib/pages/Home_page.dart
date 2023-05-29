@@ -29,6 +29,7 @@ class _Home_pageState extends State<Home_page> {
               onPressed: () async {
                 showloading(context);
                 await FirebaseAuth.instance.signOut();
+
                 Navigator.of(context).pushReplacementNamed('Login');
               },
               icon: const Icon(Icons.logout))
