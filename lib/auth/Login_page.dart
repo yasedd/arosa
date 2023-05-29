@@ -61,6 +61,10 @@ class _Login_pageState extends State<Login_page> {
       //   ],
       // ),
       body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('images/cover.jpg'), fit: BoxFit.cover),
+        ),
         padding: const EdgeInsets.all(20),
         child: ListView(children: [
           Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -72,98 +76,116 @@ class _Login_pageState extends State<Login_page> {
               height: 220,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(110),
-                  image: DecorationImage(
+                  image: const DecorationImage(
                       image: AssetImage('images/desing_app.jpg'),
                       fit: BoxFit.cover),
-                  boxShadow: [
-                    BoxShadow(color: Colors.blueAccent, blurRadius: 10)
+                  boxShadow: const [
+                    BoxShadow(color: Colors.black, blurRadius: 10)
                   ]),
             ),
             const SizedBox(
               height: 40,
             ),
-            Form(
-                key: formkey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: const InputDecoration(
-                          labelText: 'email',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.email)),
-                      textInputAction: TextInputAction.next,
-                      onSaved: (newValue) {
-                        email = newValue;
-                      },
-                      validator: (value) {
-                        if (value!.contains('@') & value.contains('.')) {
-                          return null;
-                        } else {
-                          return 'Not a email adress';
-                        }
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                        prefixIcon: Icon(Icons.password),
-                        suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                value = false;
-                              });
-                            },
-                            icon: const Icon(Icons.remove_red_eye)),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: const [
+                    BoxShadow(color: Colors.black, blurRadius: 20)
+                  ]),
+              child: Form(
+                  key: formkey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: const InputDecoration(
+                            labelText: 'email',
+                            border: OutlineInputBorder(),
+                            prefixIcon: Icon(Icons.email)),
+                        textInputAction: TextInputAction.next,
+                        onSaved: (newValue) {
+                          email = newValue;
+                        },
+                        validator: (value) {
+                          if (value!.contains('@') & value.contains('.')) {
+                            return null;
+                          } else {
+                            return 'Not a email adress';
+                          }
+                        },
                       ),
-                      obscureText: value,
-                      textInputAction: TextInputAction.done,
-                      onSaved: (newValue) => password = newValue,
-                      validator: (value) {
-                        if (value!.length < 6) {
-                          return 'Password to week';
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                  ],
-                )),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: 'Password',
+                          prefixIcon: const Icon(Icons.password),
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  value = false;
+                                });
+                              },
+                              icon: const Icon(Icons.remove_red_eye)),
+                        ),
+                        obscureText: value,
+                        textInputAction: TextInputAction.done,
+                        onSaved: (newValue) => password = newValue,
+                        validator: (value) {
+                          if (value!.length < 6) {
+                            return 'Password to week';
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ],
+                  )),
+            ),
             const SizedBox(
               height: 40,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton.icon(
-                    onPressed: () async {
-                      UserCredential responce = await login();
-                      // ignore: unnecessary_null_comparison
-                      if (responce != null) {
-                        showloading(context);
-                        Navigator.of(context).pushReplacementNamed('Home');
-                      } else {
-                        print("Login faild ");
-                      }
-                      print('***************');
-                      print(responce);
-                      print('***************');
-                    },
-                    icon: const Icon(Icons.login),
-                    label: const Text('Login')),
-                const Text('Sign Up Here'),
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('SignUp');
-                    },
-                    child: const Text('Sign Up'))
-              ],
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: const [
+                    BoxShadow(color: Colors.black, blurRadius: 20)
+                  ]),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton.icon(
+                      onPressed: () async {
+                        UserCredential responce = await login();
+                        // ignore: unnecessary_null_comparison
+                        if (responce != null) {
+                          showloading(context);
+                          Navigator.of(context).pushReplacementNamed('Home');
+                        } else {
+                          print("Login faild ");
+                        }
+                        print('***************');
+                        print(responce);
+                        print('***************');
+                      },
+                      icon: const Icon(Icons.login),
+                      label: const Text('Login')),
+                  const Text('Sign Up Here'),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('SignUp');
+                      },
+                      child: const Text('Sign Up'))
+                ],
+              ),
             )
           ]),
         ]),
