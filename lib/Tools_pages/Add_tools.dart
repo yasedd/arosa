@@ -160,6 +160,7 @@ class _Add_toolsState extends State<Add_tools> {
                                 border: OutlineInputBorder(),
                                 labelText: 'Distributed water',
                                 helperText: '*Only for Pompe'),
+                            enabled: true,
                             keyboardType: TextInputType.number,
                             onSaved: (newValue) {
                               distributedwater = newValue;

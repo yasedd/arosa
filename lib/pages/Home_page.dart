@@ -36,109 +36,102 @@ class _Home_pageState extends State<Home_page> {
         ],
       ),
       drawer: const drawer(),
-      body: FutureBuilder(
-        future: ref.get(),
+      body: StreamBuilder(
+        stream: ref.snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasError) {
-            return const Text("Something went wrong");
+            return Text('Something went wrong');
           }
 
-          if (snapshot.hasData && !snapshot.data!.exists) {
-            return const Text("Document does not exist");
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
           }
-
-          //Data is output to the user
-          if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> data =
-                snapshot.data!.data() as Map<String, dynamic>;
-            return ListView(children: [
-              const SizedBox(
-                height: 10,
-              ),
-              InkWell(
-                child: Container(
-                  margin: const EdgeInsets.all(20),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 10,
-                        )
-                      ]),
-                  width: double.maxFinite,
-                  height: 270,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'Pompes',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      Image.asset(
-                        'images/POMPE-icon.jpg',
-                        width: 150,
-                        height: 150,
-                      ),
-                      Text(
-                        '${data["Pompes"] == null ? 0 : data["Pompes"].length}',
-                        // 'pss',
-                        style: const TextStyle(
-                            fontSize: 40, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return ListView(children: [
+            const SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              child: Container(
+                margin: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 10,
+                      )
+                    ]),
+                width: double.maxFinite,
+                height: 270,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Pompes',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Image.asset(
+                      'images/POMPE-icon.jpg',
+                      width: 150,
+                      height: 150,
+                    ),
+                    Text(
+                      '${data["Pompes"] == null ? 0 : data["Pompes"].length}',
+                      // 'pss',
+                      style: const TextStyle(
+                          fontSize: 40, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                onTap: () {
-                  Navigator.of(context).pushNamed('State_tools');
-                },
               ),
-              InkWell(
-                child: Container(
-                  margin: const EdgeInsets.all(20),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 10,
-                        )
-                      ]),
-                  width: double.maxFinite,
-                  height: 270,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'Vannes',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      Image.asset(
-                        'images/valve-removebg-preview.png',
-                        width: 150,
-                        height: 150,
-                      ),
-                      Text(
-                        '${data['Vannes'] == null ? 0 : data['Vannes'].length}',
-                        style: const TextStyle(
-                            fontSize: 40, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+              onTap: () {
+                Navigator.of(context).pushNamed('State_tools');
+              },
+            ),
+            InkWell(
+              child: Container(
+                margin: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 10,
+                      )
+                    ]),
+                width: double.maxFinite,
+                height: 270,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Vannes',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Image.asset(
+                      'images/valve-removebg-preview.png',
+                      width: 150,
+                      height: 150,
+                    ),
+                    Text(
+                      '${data['Vannes'] == null ? 0 : data['Vannes'].length}',
+                      style: const TextStyle(
+                          fontSize: 40, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                onTap: () {
-                  Navigator.of(context).pushNamed('State_tools');
-                },
               ),
-            ]);
-          } else
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+              onTap: () {
+                Navigator.of(context).pushNamed('State_tools');
+              },
+            ),
+          ]);
         },
       ),
     );
