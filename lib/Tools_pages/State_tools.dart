@@ -250,8 +250,8 @@ class _State_toolsState extends State<State_tools> {
                                     print('Error : $e');
                                   });
                                   dataref
-                                      .child(
-                                          '${FirebaseAuth.instance.currentUser!.uid}')
+                                      .child(FirebaseAuth
+                                          .instance.currentUser!.uid)
                                       .update(databaseData);
                                 });
                               }),
