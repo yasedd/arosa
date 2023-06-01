@@ -45,7 +45,11 @@ class _State_toolsState extends State<State_tools> {
           title: const Text('State of tools'),
           centerTitle: true,
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('Remove_tools');
+                },
+                icon: const Icon(Icons.delete)),
             IconButton(
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -85,7 +89,7 @@ class _State_toolsState extends State<State_tools> {
                     .child(FirebaseAuth.instance.currentUser!.uid)
                     .set(databaseData);
               } catch (e) {
-                print(e);
+                print(' realtime Error : $e');
               }
             }
 
@@ -94,15 +98,25 @@ class _State_toolsState extends State<State_tools> {
                   physics: const BouncingScrollPhysics(),
                   itemCount: data['Pompes'].length,
                   itemBuilder: (context, index) {
-                    dataref
-                        .child(
-                            '${FirebaseAuth.instance.currentUser!.uid}/Pompes/$index/distributedwater')
-                        .onValue
-                        .listen((DatabaseEvent event) {
-                      final data = event.snapshot.value;
-                      // print(data);
-                      Pompes[index]['distributedwater'] = data;
-                    });
+                    // ignore: unnecessary_null_comparison
+                    // const Duration(seconds: 3);
+                    if (Pompes.isNotEmpty ||
+                        Pompes[index] == data['Pompes'][index]) {
+                      dataref
+                          .child(
+                              '${FirebaseAuth.instance.currentUser!.uid}/Pompes/$index/distributedwater')
+                          .onValue
+                          .listen((DatabaseEvent event) {
+                        final sdata = event.snapshot.value;
+                        // print(data);
+                        try {
+                          Pompes[index]['distributedwater'] = sdata;
+                        } catch (e) {
+                          print('Error St_tl: $e');
+                        }
+                      });
+                    }
+
                     settimePompe() {
                       showDialog(
                           context: context,

@@ -71,14 +71,10 @@ class _Signup_pageState extends State<Signup_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   title: const Text('Sign up'),
-        //   centerTitle: true,
-        // ),
         body: Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('images/cover.jpg'), fit: BoxFit.cover),
+            image: AssetImage('images/cover3.jpg'), fit: BoxFit.cover),
       ),
       padding: const EdgeInsets.all(20),
       child: ListView(children: [

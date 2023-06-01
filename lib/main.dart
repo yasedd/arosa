@@ -1,6 +1,7 @@
 import 'package:arosa/pages/About.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Tools_pages/Add_tools.dart';
+import 'Tools_pages/Remove_tools.dart';
 import 'Tools_pages/State_tools.dart';
 import 'auth/Singup_page.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         'About': (context) => const About(),
         'State_tools': (context) => const State_tools(),
         'Add_tools': (context) => const Add_tools(),
+        'Remove_tools': (context) => const Remove_tools(),
       },
     );
   }
