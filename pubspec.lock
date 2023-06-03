@@ -424,6 +424,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  percent_indicator:
+    dependency: "direct main"
+    description:
+      name: percent_indicator
+      sha256: c37099ad833a883c9d71782321cb65c3a848c21b6939b6185f0ff6640d05814c
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.3"
   petitparser:
     dependency: transitive
     description:
@@ -464,6 +472,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.1"
+  scaled_list:
+    dependency: "direct main"
+    description:
+      name: scaled_list
+      sha256: "42754e6140dcb7d4291a6fb170364e000b6da1cae304fab96f35c01fa8599058"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   select_form_field:
     dependency: "direct main"
     description:
