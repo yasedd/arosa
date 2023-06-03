@@ -1,4 +1,5 @@
 import 'package:arosa/pages/About.dart';
+import 'package:arosa/supervision_pages/Supervision_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Tools_pages/Add_tools.dart';
 import 'Tools_pages/Remove_tools.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         'State_tools': (context) => const State_tools(),
         'Add_tools': (context) => const Add_tools(),
         'Remove_tools': (context) => const Remove_tools(),
+        'Supervision': (context) => const Supervision_page()
       },
     );
   }

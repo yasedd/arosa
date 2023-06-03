@@ -38,7 +38,7 @@ class _Add_toolsState extends State<Add_tools> {
               icon: const Icon(Icons.arrow_back))
         ],
       ),
-      drawer: drawer(),
+      drawer: const drawer(),
       body: FutureBuilder(
         future: ref.get(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -155,17 +155,17 @@ class _Add_toolsState extends State<Add_tools> {
                           const SizedBox(
                             height: 20,
                           ),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Distributed water',
-                                helperText: '*Only for Pompe'),
-                            enabled: true,
-                            keyboardType: TextInputType.number,
-                            onSaved: (newValue) {
-                              distributedwater = newValue;
-                            },
-                          ),
+                          // TextFormField(
+                          //   decoration: const InputDecoration(
+                          //       border: OutlineInputBorder(),
+                          //       labelText: 'Distributed water',
+                          //       helperText: '*Only for Pompe'),
+                          //   enabled: true,
+                          //   keyboardType: TextInputType.number,
+                          //   onSaved: (newValue) {
+                          //     distributedwater = newValue;
+                          //   },
+                          // ),
                           const SizedBox(
                             height: 40,
                           ),

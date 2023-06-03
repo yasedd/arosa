@@ -35,21 +35,10 @@ class _State_toolsState extends State<State_tools> {
     return DefaultTabController(
       length: mytabs.length,
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.of(context).pushNamed('Add_tools');
-            }),
         appBar: AppBar(
           title: const Text('State of tools'),
           centerTitle: true,
           actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('Remove_tools');
-                },
-                icon: const Icon(Icons.delete)),
             IconButton(
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -82,12 +71,13 @@ class _State_toolsState extends State<State_tools> {
               'Pompes': Pompes,
               'Vannes': Vannes,
             };
+            // var disdata;
             // ignore: unnecessary_null_comparison
             if (data != null) {
               try {
                 dataref
                     .child(FirebaseAuth.instance.currentUser!.uid)
-                    .set(databaseData);
+                    .update(databaseData);
               } catch (e) {
                 print(' realtime Error : $e');
               }
@@ -98,8 +88,6 @@ class _State_toolsState extends State<State_tools> {
                   physics: const BouncingScrollPhysics(),
                   itemCount: data['Pompes'].length,
                   itemBuilder: (context, index) {
-                    // ignore: unnecessary_null_comparison
-                    // const Duration(seconds: 3);
                     if (Pompes.isNotEmpty ||
                         Pompes[index] == data['Pompes'][index]) {
                       dataref
@@ -107,13 +95,12 @@ class _State_toolsState extends State<State_tools> {
                               '${FirebaseAuth.instance.currentUser!.uid}/Pompes/$index/distributedwater')
                           .onValue
                           .listen((DatabaseEvent event) {
-                        final sdata = event.snapshot.value;
+                        Pompes[index]['distributedwater'] =
+                            event.snapshot.value;
                         // print(data);
-                        try {
-                          Pompes[index]['distributedwater'] = sdata;
-                        } catch (e) {
-                          print('Error St_tl: $e');
-                        }
+                        ref
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update({'Pompes': Pompes});
                       });
                     }
 
@@ -310,66 +297,66 @@ class _State_toolsState extends State<State_tools> {
                                   ))),
                           ListTile(
                               title: const Text('Distributed water'),
-                              // subtitle: Text(
-                              //     '${data['Pompes'][index]['distributedwater']}'),
-                              onTap: () {
-                                setState(() {
-                                  ref
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser!.uid)
-                                      .update({'Pompes': Pompes}).then((value) {
-                                    print('update success');
-                                  }).catchError((e) {
-                                    print('Error : $e');
-                                  });
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 190),
-                                        child: AlertDialog(
-                                          title: Text(
-                                            '${data['Pompes'][index]['Type']} ${index + 1}',
-                                            style: const TextStyle(
-                                                fontSize: 30,
-                                                color: Colors.blueAccent,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          content: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              const Center(
-                                                child: Text(
-                                                  'Distributed water',
-                                                  style: TextStyle(
-                                                    fontSize: 20,
-                                                  ),
-                                                ),
-                                              ),
-                                              Center(
-                                                child: Text(
-                                                  '${data['Pompes'][index]['distributedwater']}',
-                                                  style: const TextStyle(
-                                                      fontSize: 60),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          // actions: [
-                                          //   ElevatedButton(
-                                          //       onPressed: () {
-                                          //         Navigator.of(context).pop();
-                                          //       },
-                                          //       child: const Text('Cancel'))
-                                          // ],
-                                        ),
-                                      );
-                                    },
-                                  );
-                                });
-                              },
+                              subtitle: Text(
+                                  '${data['Pompes'][index]['distributedwater']}'),
+                              // onTap: () {
+                              //   setState(() {
+                              //     ref
+                              //         .doc(FirebaseAuth
+                              //             .instance.currentUser!.uid)
+                              //         .update({'Pompes': Pompes}).then((value) {
+                              //       print('update success');
+                              //     }).catchError((e) {
+                              //       print('Error : $e');
+                              //     });
+                              //     showDialog(
+                              //       context: context,
+                              //       builder: (context) {
+                              //         return Container(
+                              //           margin: const EdgeInsets.symmetric(
+                              //               vertical: 190),
+                              //           child: AlertDialog(
+                              //             title: Text(
+                              //               '${data['Pompes'][index]['Type']} ${index + 1}',
+                              //               style: const TextStyle(
+                              //                   fontSize: 30,
+                              //                   color: Colors.blueAccent,
+                              //                   fontWeight: FontWeight.bold),
+                              //             ),
+                              //             content: Column(
+                              //               mainAxisAlignment:
+                              //                   MainAxisAlignment.spaceEvenly,
+                              //               children: [
+                              //                 const Center(
+                              //                   child: Text(
+                              //                     'Distributed water',
+                              //                     style: TextStyle(
+                              //                       fontSize: 20,
+                              //                     ),
+                              //                   ),
+                              //                 ),
+                              //                 Center(
+                              //                   child: Text(
+                              //                     '${data['Pompes'][index]['distributedwater']}',
+                              //                     style: const TextStyle(
+                              //                         fontSize: 60),
+                              //                   ),
+                              //                 ),
+                              //               ],
+                              //             ),
+                              //             // actions: [
+                              //             //   ElevatedButton(
+                              //             //       onPressed: () {
+                              //             //         Navigator.of(context).pop();
+                              //             //       },
+                              //             //       child: const Text('Cancel'))
+                              //             // ],
+                              //           ),
+                              //         );
+                              //       },
+                              //     );
+                              //   });
+                              // },
                               trailing: IconButton(
                                 onPressed: () {},
                                 icon: Icon(Icons.water,

@@ -18,7 +18,7 @@ class _Remove_toolsState extends State<Remove_tools> {
   // bool val = false;
   List Pompes = [], Vannes = [];
   List<bool> checkedlistPompes = [], checkedlistVannes = [];
-  Map<String, dynamic> databaseData = {};
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,17 +54,14 @@ class _Remove_toolsState extends State<Remove_tools> {
           }
           Pompes = data['Pompes'] ?? [];
           Vannes = data['Vannes'] ?? [];
-          // print(Pompes.length);
-          Map<String, dynamic> databaseData = {
-            'Pompes': Pompes,
-            'Vannes': Vannes,
-          };
+
           // ignore: unnecessary_null_comparison
           if (data != null) {
             try {
-              dataref
-                  .child(FirebaseAuth.instance.currentUser!.uid)
-                  .set(databaseData);
+              dataref.child(FirebaseAuth.instance.currentUser!.uid).update({
+                'Pompes': Pompes,
+                'Vannes': Vannes,
+              });
             } catch (e) {
               print(' realtime Error : $e');
             }
