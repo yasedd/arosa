@@ -1,4 +1,5 @@
 import 'package:arosa/scaffold_adds/drawer.dart';
+import 'package:arosa/test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,12 @@ class _Home_pageState extends State<Home_page> {
         title: const Text('Home'),
         centerTitle: true,
         actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => DurationScreen()));
+              },
+              icon: Icon(Icons.abc)),
           IconButton(
               onPressed: () async {
                 showloading(context);

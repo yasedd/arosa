@@ -2,7 +2,7 @@ import 'package:arosa/scaffold_adds/alert.dart';
 import 'package:arosa/scaffold_adds/drawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+// import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:select_form_field/select_form_field.dart';
 
@@ -18,6 +18,7 @@ class _Add_toolsState extends State<Add_tools> {
   Widget build(BuildContext context) {
     GlobalKey<FormState> keyform = GlobalKey<FormState>();
     var type, state, timestart, timeend, distributedwater;
+    // var duration = 0;
     bool settime = false;
     TextEditingController contimestart = TextEditingController();
     TextEditingController contimeend = TextEditingController();
@@ -155,17 +156,6 @@ class _Add_toolsState extends State<Add_tools> {
                           const SizedBox(
                             height: 20,
                           ),
-                          // TextFormField(
-                          //   decoration: const InputDecoration(
-                          //       border: OutlineInputBorder(),
-                          //       labelText: 'Distributed water',
-                          //       helperText: '*Only for Pompe'),
-                          //   enabled: true,
-                          //   keyboardType: TextInputType.number,
-                          //   onSaved: (newValue) {
-                          //     distributedwater = newValue;
-                          //   },
-                          // ),
                           const SizedBox(
                             height: 40,
                           ),
@@ -173,6 +163,28 @@ class _Add_toolsState extends State<Add_tools> {
                             child: ElevatedButton.icon(
                               onPressed: () async {
                                 keyform.currentState!.save();
+                                TimeOfDay parseTimeOfDay(String time) {
+                                  final parts = time.split(':');
+                                  final hour = int.parse(parts[0]);
+                                  final minute =
+                                      int.parse(parts[1].substring(0, 2));
+                                  // final period = parts[1].substring(3);
+                                  return TimeOfDay(hour: hour, minute: minute);
+                                }
+
+                                int getDurationAsSeconde() {
+                                  final start = parseTimeOfDay(timestart);
+                                  final end = parseTimeOfDay(timeend);
+                                  final startDateTime = DateTime(
+                                      0, 0, 0, start.hour, start.minute);
+                                  final endDateTime =
+                                      DateTime(0, 0, 0, end.hour, end.minute);
+                                  final duration =
+                                      endDateTime.difference(startDateTime);
+                                  return duration.inSeconds.abs();
+                                }
+
+                                // duration = timeend.difference(timestart);
                                 if (type == 'Pompe') {
                                   Pompes.add({
                                     'Type': type,
@@ -180,6 +192,7 @@ class _Add_toolsState extends State<Add_tools> {
                                     'setTime': settime,
                                     'TimeStart': timestart,
                                     'TimeEnd': timeend,
+                                    'duration': getDurationAsSeconde(),
                                     'distributedwater': distributedwater
                                   });
                                   print(Pompes);
@@ -194,7 +207,8 @@ class _Add_toolsState extends State<Add_tools> {
                                     'State': state,
                                     'setTime': settime,
                                     'TimeStart': timestart,
-                                    'TimeEnd': timeend
+                                    'TimeEnd': timeend,
+                                    'duration': getDurationAsSeconde()
                                   });
                                   print(Vannes);
                                   ref.update({'Vannes': Vannes});

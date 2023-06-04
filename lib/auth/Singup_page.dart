@@ -19,6 +19,7 @@ class _Signup_pageState extends State<Signup_page> {
   var password;
   List Pompes = [];
   List Vannes = [];
+  List Plants = [];
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   register() async {
     var ref = FirebaseFirestore.instance
@@ -30,7 +31,8 @@ class _Signup_pageState extends State<Signup_page> {
       'phone': phonenumber,
       'userid': FirebaseAuth.instance.currentUser!.uid,
       'Pompes': Pompes,
-      'Vannes': Vannes
+      'Vannes': Vannes,
+      'Plants': Plants
     });
   }
 

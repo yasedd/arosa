@@ -57,6 +57,7 @@ class _Supervision_pageState extends State<Supervision_page> {
               .listen((event) {
             try {
               Plants = event.snapshot.value as List<dynamic>;
+
               ref.update({'Plants': Plants});
               print(Plants);
             } on Exception catch (e) {
@@ -71,8 +72,11 @@ class _Supervision_pageState extends State<Supervision_page> {
             width: double.maxFinite,
             height: double.maxFinite,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                const SizedBox(
+                  height: 15,
+                ),
                 Container(
                   width: double.maxFinite,
                   margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -90,6 +94,9 @@ class _Supervision_pageState extends State<Supervision_page> {
                     leading: const Icon(Icons.water),
                     trailing: Text('$distwater'),
                   ),
+                ),
+                const SizedBox(
+                  height: 15,
                 ),
                 SizedBox(
                   width: double.maxFinite,

@@ -29,7 +29,7 @@ class _State_toolsState extends State<State_tools> {
   ];
   var TimeEnd;
   var TimeStart;
-
+  var timestart, timeend;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -180,6 +180,38 @@ class _State_toolsState extends State<State_tools> {
                                           if (Skey.currentState!.validate()) {
                                             Skey.currentState!.save();
                                             setState(() {
+                                              TimeOfDay parseTimeOfDay(
+                                                  String time) {
+                                                final parts = time.split(':');
+                                                final hour =
+                                                    int.parse(parts[0]);
+                                                final minute = int.parse(
+                                                    parts[1].substring(0, 2));
+                                                // final period = parts[1].substring(3);
+                                                return TimeOfDay(
+                                                    hour: hour, minute: minute);
+                                              }
+
+                                              int getDurationAsSeconde() {
+                                                final start = parseTimeOfDay(
+                                                    Pompes[index]['TimeStart']);
+                                                final end = parseTimeOfDay(
+                                                    Pompes[index]['TimeEnd']);
+                                                final startDateTime = DateTime(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    start.hour,
+                                                    start.minute);
+                                                final endDateTime = DateTime(0,
+                                                    0, 0, end.hour, end.minute);
+                                                final duration = endDateTime
+                                                    .difference(startDateTime);
+                                                return duration.inSeconds.abs();
+                                              }
+
+                                              Pompes[index]['duration'] =
+                                                  getDurationAsSeconde();
                                               ref
                                                   .doc(FirebaseAuth.instance
                                                       .currentUser!.uid)
@@ -299,64 +331,6 @@ class _State_toolsState extends State<State_tools> {
                               title: const Text('Distributed water'),
                               subtitle: Text(
                                   '${data['Pompes'][index]['distributedwater']}'),
-                              // onTap: () {
-                              //   setState(() {
-                              //     ref
-                              //         .doc(FirebaseAuth
-                              //             .instance.currentUser!.uid)
-                              //         .update({'Pompes': Pompes}).then((value) {
-                              //       print('update success');
-                              //     }).catchError((e) {
-                              //       print('Error : $e');
-                              //     });
-                              //     showDialog(
-                              //       context: context,
-                              //       builder: (context) {
-                              //         return Container(
-                              //           margin: const EdgeInsets.symmetric(
-                              //               vertical: 190),
-                              //           child: AlertDialog(
-                              //             title: Text(
-                              //               '${data['Pompes'][index]['Type']} ${index + 1}',
-                              //               style: const TextStyle(
-                              //                   fontSize: 30,
-                              //                   color: Colors.blueAccent,
-                              //                   fontWeight: FontWeight.bold),
-                              //             ),
-                              //             content: Column(
-                              //               mainAxisAlignment:
-                              //                   MainAxisAlignment.spaceEvenly,
-                              //               children: [
-                              //                 const Center(
-                              //                   child: Text(
-                              //                     'Distributed water',
-                              //                     style: TextStyle(
-                              //                       fontSize: 20,
-                              //                     ),
-                              //                   ),
-                              //                 ),
-                              //                 Center(
-                              //                   child: Text(
-                              //                     '${data['Pompes'][index]['distributedwater']}',
-                              //                     style: const TextStyle(
-                              //                         fontSize: 60),
-                              //                   ),
-                              //                 ),
-                              //               ],
-                              //             ),
-                              //             // actions: [
-                              //             //   ElevatedButton(
-                              //             //       onPressed: () {
-                              //             //         Navigator.of(context).pop();
-                              //             //       },
-                              //             //       child: const Text('Cancel'))
-                              //             // ],
-                              //           ),
-                              //         );
-                              //       },
-                              //     );
-                              //   });
-                              // },
                               trailing: IconButton(
                                 onPressed: () {},
                                 icon: Icon(Icons.water,
@@ -449,6 +423,38 @@ class _State_toolsState extends State<State_tools> {
                                           if (Skey.currentState!.validate()) {
                                             Skey.currentState!.save();
                                             setState(() {
+                                              TimeOfDay parseTimeOfDay(
+                                                  String time) {
+                                                final parts = time.split(':');
+                                                final hour =
+                                                    int.parse(parts[0]);
+                                                final minute = int.parse(
+                                                    parts[1].substring(0, 2));
+                                                // final period = parts[1].substring(3);
+                                                return TimeOfDay(
+                                                    hour: hour, minute: minute);
+                                              }
+
+                                              int getDurationAsSeconde() {
+                                                final start = parseTimeOfDay(
+                                                    Vannes[index]['TimeStart']);
+                                                final end = parseTimeOfDay(
+                                                    Vannes[index]['TimeEnd']);
+                                                final startDateTime = DateTime(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    start.hour,
+                                                    start.minute);
+                                                final endDateTime = DateTime(0,
+                                                    0, 0, end.hour, end.minute);
+                                                final duration = endDateTime
+                                                    .difference(startDateTime);
+                                                return duration.inSeconds.abs();
+                                              }
+
+                                              Vannes[index]['duration'] =
+                                                  getDurationAsSeconde();
                                               ref
                                                   .doc(FirebaseAuth.instance
                                                       .currentUser!.uid)
