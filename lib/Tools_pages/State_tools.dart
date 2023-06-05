@@ -36,7 +36,7 @@ class _State_toolsState extends State<State_tools> {
       length: mytabs.length,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('State of tools'),
+          title: const Text('Controle'),
           centerTitle: true,
           actions: [
             IconButton(
@@ -88,21 +88,21 @@ class _State_toolsState extends State<State_tools> {
                   physics: const BouncingScrollPhysics(),
                   itemCount: data['Pompes'].length,
                   itemBuilder: (context, index) {
-                    if (Pompes.isNotEmpty ||
-                        Pompes[index] == data['Pompes'][index]) {
-                      dataref
-                          .child(
-                              '${FirebaseAuth.instance.currentUser!.uid}/Pompes/$index/distributedwater')
-                          .onValue
-                          .listen((DatabaseEvent event) {
-                        Pompes[index]['distributedwater'] =
-                            event.snapshot.value;
-                        // print(data);
-                        ref
-                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .update({'Pompes': Pompes});
-                      });
-                    }
+                    // if (Pompes.isNotEmpty ||
+                    //     Pompes[index] == data['Pompes'][index]) {
+                    //   dataref
+                    //       .child(
+                    //           '${FirebaseAuth.instance.currentUser!.uid}/Pompes/$index/distributedwater')
+                    //       .onValue
+                    //       .listen((DatabaseEvent event) {
+                    //     Pompes[index]['distributedwater'] =
+                    //         event.snapshot.value;
+                    //     // print(data);
+                    //     ref
+                    //         .doc(FirebaseAuth.instance.currentUser!.uid)
+                    //         .update({'Pompes': Pompes});
+                    //   });
+                    // }
 
                     settimePompe() {
                       showDialog(
@@ -327,18 +327,18 @@ class _State_toolsState extends State<State_tools> {
                                         ? Colors.blueAccent
                                         : Colors.grey,
                                   ))),
-                          ListTile(
-                              title: const Text('Distributed water'),
-                              subtitle: Text(
-                                  '${data['Pompes'][index]['distributedwater']}'),
-                              trailing: IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.water,
-                                    color:
-                                        data['Pompes'][index]['State'] == true
-                                            ? Colors.blueAccent
-                                            : Colors.grey),
-                              ))
+                          // ListTile(
+                          //     title: const Text('Distributed water'),
+                          //     subtitle: Text(
+                          //         '${data['Pompes'][index]['distributedwater']}'),
+                          //     trailing: IconButton(
+                          //       onPressed: () {},
+                          //       icon: Icon(Icons.water,
+                          //           color:
+                          //               data['Pompes'][index]['State'] == true
+                          //                   ? Colors.blueAccent
+                          //                   : Colors.grey),
+                          //     ))
                         ],
                       ),
                     );

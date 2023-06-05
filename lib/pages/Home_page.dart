@@ -62,7 +62,7 @@ class _Home_pageState extends State<Home_page> {
               snapshot.data!.data() as Map<String, dynamic>;
           Pompes = data['Pompes'] ?? [];
           Vannes = data['Vannes'] ?? [];
-          mode = data['mode'];
+          // mode = data['mode'];
           dataref.child(FirebaseAuth.instance.currentUser!.uid).update({
             'Pompes': Pompes,
             'Vannes': Vannes,

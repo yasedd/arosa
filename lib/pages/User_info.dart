@@ -23,7 +23,7 @@ class _User_infoState extends State<User_info> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Info'),
+        title: const Text('Info personnelles'),
         centerTitle: true,
         actions: [
           IconButton(

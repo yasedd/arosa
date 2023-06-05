@@ -48,8 +48,26 @@ class _drawerState extends State<drawer> {
                   },
                 ),
                 ListTile(
+                  leading: const Icon(Icons.content_paste_go_rounded),
+                  title: const Text('Controle'),
+                  onTap: () {
+                    setState(() {
+                      Navigator.of(context).pushNamed('State_tools');
+                    });
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.monitor),
+                  title: const Text('Supervision'),
+                  onTap: () {
+                    setState(() {
+                      Navigator.of(context).pushNamed('Supervision');
+                    });
+                  },
+                ),
+                ListTile(
                   leading: const Icon(Icons.person_add),
-                  title: const Text('Personal information'),
+                  title: const Text('Info personnelles'),
                   onTap: () {
                     setState(() {
                       Navigator.of(context).pushNamed('User_info');
@@ -67,7 +85,7 @@ class _drawerState extends State<drawer> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.logout),
-                  title: const Text('Logout'),
+                  title: const Text('Déconnexion'),
                   onTap: () async {
                     await FirebaseAuth.instance.signOut();
                     Navigator.of(context).pushReplacementNamed('Login');
