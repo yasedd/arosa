@@ -24,6 +24,7 @@ class _Remove_toolsState extends State<Remove_tools> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Remove'),
+        centerTitle: true,
         actions: [
           IconButton(
               onPressed: () {

@@ -1,5 +1,5 @@
 import 'package:arosa/scaffold_adds/drawer.dart';
-import 'package:arosa/test.dart';
+// import 'package:arosa/test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +31,12 @@ class _Home_pageState extends State<Home_page> {
         title: const Text('Home'),
         centerTitle: true,
         actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => DurationScreen()));
-              },
-              icon: Icon(Icons.abc)),
+          // IconButton(
+          //     onPressed: () {
+          //       Navigator.of(context).push(
+          //           MaterialPageRoute(builder: (context) => DurationScreen()));
+          //     },
+          //     icon: Icon(Icons.abc)),
           IconButton(
               onPressed: () async {
                 showloading(context);
@@ -73,7 +73,7 @@ class _Home_pageState extends State<Home_page> {
             ),
             Container(
               width: double.maxFinite,
-              height: 250,
+              height: 150,
               margin: const EdgeInsets.all(10),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -89,51 +89,51 @@ class _Home_pageState extends State<Home_page> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          setState(() {
-                            if (mode == 'Manuel') {
-                              mode = 'Automatique';
-                            } else {
-                              mode = 'Manuel';
-                            }
-                            ref.update({'mode': mode});
-                            dataref
-                                .child(FirebaseAuth.instance.currentUser!.uid)
-                                .update({'mode': mode});
-                          });
-                        },
-                        label: const Text('Mode'),
-                        icon: const Icon(Icons.check_circle_outline_outlined),
-                        style: ElevatedButton.styleFrom(
-                            fixedSize: const Size.fromRadius(48),
-                            backgroundColor: Colors.blueGrey),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        width: 200,
-                        height: 95,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 2,
-                              )
-                            ]),
-                        child: Center(
-                            child: Text(
-                          mode,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        )),
-                      )
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     ElevatedButton.icon(
+                  //       onPressed: () {
+                  //         setState(() {
+                  //           if (mode == 'Manuel') {
+                  //             mode = 'Automatique';
+                  //           } else {
+                  //             mode = 'Manuel';
+                  //           }
+                  //           ref.update({'mode': mode});
+                  //           dataref
+                  //               .child(FirebaseAuth.instance.currentUser!.uid)
+                  //               .update({'mode': mode});
+                  //         });
+                  //       },
+                  //       label: const Text('Mode'),
+                  //       icon: const Icon(Icons.check_circle_outline_outlined),
+                  //       style: ElevatedButton.styleFrom(
+                  //           fixedSize: const Size.fromRadius(48),
+                  //           backgroundColor: Colors.blueGrey),
+                  //     ),
+                  //     Container(
+                  //       padding: const EdgeInsets.all(5),
+                  //       width: 200,
+                  //       height: 95,
+                  //       decoration: BoxDecoration(
+                  //           color: Colors.white,
+                  //           borderRadius: BorderRadius.circular(5),
+                  //           boxShadow: const [
+                  //             BoxShadow(
+                  //               color: Colors.grey,
+                  //               blurRadius: 2,
+                  //             )
+                  //           ]),
+                  //       child: Center(
+                  //           child: Text(
+                  //         mode,
+                  //         style: const TextStyle(
+                  //             fontSize: 20, fontWeight: FontWeight.bold),
+                  //       )),
+                  //     )
+                  //   ],
+                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
